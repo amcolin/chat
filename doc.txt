@@ -1,0 +1,27 @@
+Chat.Supervisor (one-for-one)
+
+  - worker: Chat.Controller
+  - worker: Chat.Registry
+
+  - supervisor: Chat.Channel.Supervisor (simple one-for-one)
+    - worker(s): Chat.Channel
+
+  - supervisor: Chat.User.Supervisor (simple one-for-one)
+    - worker(s): Chat.User
+
+
+chat
+  controller.ex
+  registry.ex
+  channel.ex
+  user.ex
+  channel
+    supervisor.ex
+  user
+    supervisor.ex
+
+TODO:
+  when a channel terminates, notify all members
+  when a user terminates, notify the channels he's on
+  need a way to store pid->name mappings
+  write tests
